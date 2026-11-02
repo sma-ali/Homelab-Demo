@@ -35,7 +35,7 @@ case "$SCENE" in
       || die "Connexion SSH impossible sans saisie : lance « ssh-add », puis recommence." ;;
   *) die "Scène inconnue. Choix : vpn, scan, htop." ;;
 esac
-case "$SCENE" in vpn) SIZE=(96 13) ;; scan) SIZE=(96 14) ;; htop) SIZE=(110 30) ;; esac
+case "$SCENE" in vpn) SIZE=(96 13) ;; scan) SIZE=(96 22) ;; htop) SIZE=(110 30) ;; esac
 stty cols "${SIZE[0]}" rows "${SIZE[1]}" 2>/dev/null
 
 # À partir d'ici, tout ce qui s'affiche passe par le masque.
@@ -68,7 +68,12 @@ case "$SCENE" in
     type_cmd "$CURL" ;;
   scan)
     comment "Depuis une connexion 4G, hors de toute liste blanche : tous les ports TCP"
-    type_cmd "nmap -Pn -n -p- --min-rate 1000 --stats-every 15s $SCAN_TARGET" ;;
+    type_cmd "nmap -Pn -n -p- --min-rate 1000 --stats-every 15s $SCAN_TARGET"
+    # sur un réseau mobile, le proxy transparent de l'opérateur répond à la place du serveur
+    # sur quelques ports : un témoin, même réseau, mêmes ports, sur la cible de test de nmap
+    comment "Des ports « ouverts » ? Témoin : même 4G, mêmes ports, sur un serveur de test"
+    type_cmd "nmap -Pn -n -p 21,80,443,554,8554 scanme.nmap.org"
+    comment "Mêmes réponses : c'est le proxy de l'opérateur mobile, pas le serveur" ;;
   htop)
     type_cmd "ssh -t $PROD_SSH htop" ;;
 esac
