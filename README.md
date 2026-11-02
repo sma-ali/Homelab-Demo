@@ -1,5 +1,7 @@
 # Homelab : un labo de dev sur serveur dédié, joignable de partout
 
+[![garde-fou](https://github.com/sma-ali/Homelab-Demo/actions/workflows/garde-fou.yml/badge.svg)](https://github.com/sma-ali/Homelab-Demo/actions/workflows/garde-fou.yml)
+
 Un serveur dédié chez OVH, découpé en machines virtuelles, protégé par deux pare-feu et
 accessible uniquement par VPN. Je l'ai conçu, installé, durci et documenté seul. Il me sert
 d'environnement de développement et fait tourner, chaque nuit, mes chaînes de production vidéo
@@ -8,6 +10,7 @@ automatisées.
 > **Vitrine publique.** Le dépôt de travail (documentation complète, journal de chaque commande
 > exécutée) reste privé. Ici, ni adresse, ni port, ni nom de machine : tout ce qui pourrait
 > servir à atteindre l'infrastructure a été retiré ou remplacé par des valeurs fictives.
+> Comment, sans rien laisser passer : [les coulisses de cette vitrine](docs/coulisses.md).
 
 ## En bref
 
@@ -19,6 +22,13 @@ automatisées.
 - **Machines** : une VM de développement et une VM de production qui travaille sans surveillance.
 - **Sauvegardes** : toutes les VM, chaque nuit, avec une restauration réellement testée.
 - **Documentation** : chaque décision, procédure et commande consignée dans git.
+
+## En images
+
+![Le tableau de bord Proxmox : vue du datacenter, du nœud et de la VM de production](media/tableau-de-bord.gif)
+
+*Le vrai panel, filmé en direct. Les noms, adresses et versions à l'écran sont factices :
+ils sont remplacés dans le navigateur avant même d'être affichés.*
 
 ## Schéma
 

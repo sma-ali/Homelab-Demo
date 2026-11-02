@@ -28,6 +28,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -201,7 +202,7 @@ def ocr(image: Path) -> str:
     texts = []
     for psm in ("3", "11"):  # page entière, puis texte épars (interfaces)
         r = subprocess.run(["tesseract", str(image), "-", "-l", "fra+eng", "--psm", psm],
-                           capture_output=True, text=True)
+                           capture_output=True, text=True, env={**os.environ, "OMP_THREAD_LIMIT": "1"})
         texts.append(r.stdout)
     return "\n".join(texts)
 
@@ -278,10 +279,11 @@ def scan_video(path: str, file: Path, digest: str, blacklist, fps: str) -> list[
             vf = "scale=iw*2:ih*2:flags=lanczos" if fps == "all" else f"fps={fps},scale=iw*2:ih*2:flags=lanczos"
             subprocess.run(["ffmpeg", "-v", "error", "-i", str(file), "-vf", vf, "-vsync", "0",
                             f"{tmp}/f%06d.png"], check=True)
-            parts = []
-            for frame in sorted(Path(tmp).glob("f*.png")):
-                parts.append(f"=== image {frame.stem[1:]}\n{ocr(frame)}")
-            return "\n".join(parts)
+            frames = sorted(Path(tmp).glob("f*.png"))
+            # une image par cœur : l'OCR de chaque image est indépendant
+            with ThreadPoolExecutor(max_workers=os.cpu_count() or 4) as pool:
+                texts = list(pool.map(ocr, frames))
+            return "\n".join(f"=== image {f.stem[1:]}\n{t}" for f, t in zip(frames, texts))
     text = cached(f"vid-{fps}-{digest}", compute)
     found = []
     for block in text.split("=== image ")[1:]:

@@ -21,7 +21,7 @@ case "$OUT" in
       -bsf:v filter_units=remove_types=6 "$OUT" ;;
   *.gif)
     ffmpeg -v error -y "${TRIM[@]}" -i "$IN" -an \
-      -vf "$VF,fps=15,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer" \
+      -vf "setpts=PTS/$SPEED,scale='min(1280,iw)':-2:flags=lanczos,fps=12,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" \
       -map_metadata -1 -fflags +bitexact "$OUT"
     exiftool -q -overwrite_original -all= "$OUT" ;;
   *) echo "Sortie en .mp4 ou .gif seulement." >&2; exit 2 ;;
