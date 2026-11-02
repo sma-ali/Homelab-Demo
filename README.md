@@ -41,6 +41,11 @@ jusqu'au « TASK OK ».*
 neutre, carte réseau débranchée pour ne pas entrer en conflit avec la VM d'origine, puis
 démarrée.*
 
+![Les règles du pare-feu OPNsense : une seule règle côté Internet, des règles par appareil côté VPN](media/pare-feu.gif)
+
+*Côté Internet, une seule règle : la poignée de main WireGuard. Côté VPN, chaque appareil
+n'atteint que ce dont il a besoin, et tout le reste lui est refusé.*
+
 ## Schéma
 
 ```mermaid
