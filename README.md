@@ -6,8 +6,9 @@ Un serveur dédié chez OVH, découpé en machines virtuelles, protégé par deu
 accessible uniquement par VPN. Je l'ai conçu, installé, durci et documenté moi-même, en
 m'appuyant sur des tutoriels de référence et sur Claude comme tuteur (voir
 [Sources et outils](#sources-et-outils)). C'est mon environnement de développement, et surtout
-mon terrain de jeu : j'y crée des VM pour tester, je peux tout casser sans risque, puis tout
-restaurer. Il fait aussi tourner, chaque nuit, mes chaînes de production vidéo automatisées.
+mon terrain de jeu : j'y crée des VM de test que je peux casser sans conséquence, et si une
+fausse manipulation touche une autre VM, la sauvegarde de la nuit la remet en place. Il fait
+aussi tourner, chaque nuit, mes chaînes de production vidéo automatisées.
 
 > **Vitrine publique.** Le dépôt de travail (documentation complète, journal de chaque commande
 > exécutée) reste privé. Ici, ni adresse, ni port, ni nom de machine : tout ce qui pourrait
