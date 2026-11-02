@@ -41,4 +41,5 @@ IP, plages réseau, ports, noms de domaine, noms d'hôtes, adresses MAC, identif
 - `tools/build_blacklist.py` : régénère la liste noire (hors dépôt) depuis les sources privées, sans toucher à la partie manuelle.
 - `tools/check_leaks.py` : le contrôle (texte, OCR des images et des vidéos, métadonnées, piste audio, e-mail d'auteur). Lancé par `.githooks/` (activer avec `git config core.hooksPath .githooks`).
 - `tools/mask/` + `tools/build_mask.py` : le masque de tournage, une extension Chrome assemblée hors dépôt avec les vraies valeurs ; `tools/film.sh` ouvre la fenêtre de tournage.
+- `tools/terminal_mask.py` + `tools/scene.sh` + `tools/export_cast.sh` : les plans de terminal, enregistrés avec asciinema ; la sortie passe par le masque de terminal avant l'écran, puis l'export vérifie le texte et chaque image du GIF.
 - Tests : `python3 -m unittest discover -s tests` et `npm test` (masque dans Chromium). Toujours avec de fausses valeurs.
