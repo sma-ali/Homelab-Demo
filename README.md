@@ -46,6 +46,11 @@ démarrée.*
 *Côté Internet, une seule règle : la poignée de main WireGuard. Côté VPN, chaque appareil
 n'atteint que ce dont il a besoin, et tout le reste lui est refusé.*
 
+![Sans le tunnel WireGuard, le panel ne répond pas ; tunnel remonté, il répond](media/vpn.gif)
+
+*Le VPN-first en vingt secondes : tunnel coupé, le panel d'administration ne répond pas ;
+tunnel remonté, il répond. Enregistré en texte, la sortie masquée avant d'atteindre l'écran.*
+
 ## Schéma
 
 ```mermaid
