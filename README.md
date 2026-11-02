@@ -3,7 +3,9 @@
 [![garde-fou](https://github.com/sma-ali/Homelab-Demo/actions/workflows/garde-fou.yml/badge.svg)](https://github.com/sma-ali/Homelab-Demo/actions/workflows/garde-fou.yml)
 
 Un serveur dédié chez OVH, découpé en machines virtuelles, protégé par deux pare-feu et
-accessible uniquement par VPN. Je l'ai conçu, installé, durci et documenté seul. Il me sert
+accessible uniquement par VPN. Je l'ai conçu, installé, durci et documenté moi-même, en
+m'appuyant sur des tutoriels de référence et sur Claude comme tuteur (voir
+[Sources et outils](#sources-et-outils)). Il me sert
 d'environnement de développement et fait tourner, chaque nuit, mes chaînes de production vidéo
 automatisées.
 
@@ -148,6 +150,19 @@ ni la configuration, ni le savoir-faire. Leçon retenue, tout est écrit cette f
 - le journal des commandes réellement exécutées, avec les erreurs et leurs causes ;
 - des notes pédagogiques pour comprendre, pas seulement reproduire ;
 - une règle pour toute modification du pare-feu à distance : armer d'abord un retour automatique.
+
+## Sources et outils
+
+Les tutoriels qui m'ont servi de base, transposés à Proxmox VE récent et à OPNsense :
+
+- Zwindler, [Proxmox VE 6 et pfSense sur un serveur dédié (1/2)](https://blog.zwindler.fr/2020/03/02/deploiement-de-proxmox-ve-6-pfsense-sur-un-serveur-dedie/) et [(2/2)](https://blog.zwindler.fr/2020/03/09/proxmox-ve-6-pfsense-sur-un-serveur-dedie-2-3/)
+- Zwindler, [Déploiement d'un cluster Proxmox VE 8 (partie 1)](https://blog.zwindler.fr/2025/01/27/deploiement-d-un-cluster-proxmox-ve-8-part-1/)
+- netsplit, [Remote Proxmox + pfSense lab on OVH](https://netsplit.uk/posts/2022/10/19/remote_ovh_lab/)
+
+**Claude**, l'assistant d'Anthropic, m'a servi de tuteur tout au long du projet : il m'expliquait
+chaque commande et chaque choix, et c'est moi qui les exécutais sur le serveur. Les outils de
+cette vitrine (masque de tournage, contrôle des fuites, tests) ont été écrits avec Claude Code,
+à partir de règles que j'ai fixées.
 
 ## Prochaines étapes
 
