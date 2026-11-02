@@ -252,7 +252,10 @@ def video_metadata_findings(path: str, file: Path) -> list[Finding]:
         tags.update(stream.get("tags", {}))
         if stream.get("codec_type") == "audio" and file.suffix != ".gif":
             found.append(Finding(path, "pistes", "piste audio", "la vidéo doit être muette"))
-    extra = sorted(k for k in tags if k.lower() not in ALLOWED_VIDEO_TAGS)
+    # un « encoder » sans chiffre (vide, ou « Lavc libx264 » en mode bitexact des ffmpeg plus
+    # anciens) ne trahit aucune version
+    extra = sorted(k for k, v in tags.items() if k.lower() not in ALLOWED_VIDEO_TAGS
+                   and not (k.lower() == "encoder" and not re.search(r"\d", str(v))))
     if extra:
         found.append(Finding(path, "métadonnées", "métadonnée restante", ", ".join(extra)))
     signature = ENCODER_SIGNATURE_RE.search(file.read_bytes())
