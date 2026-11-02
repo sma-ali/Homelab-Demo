@@ -25,6 +25,12 @@ jobs:
       - name: Tests du garde-fou
         run: python3 -m unittest discover -s tests
 
+      - name: Tests du masque de tournage
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm test
+
       - name: Règles génériques, fichiers et historique
         run: python3 tools/check_leaks.py --generic-only --history
 

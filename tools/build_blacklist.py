@@ -53,7 +53,7 @@ PUBLIC_DOMAINS = {
 # Domaines de premier niveau retenus : le reste (nom.md, os.path, net.ipv4…) n'est pas un domaine.
 KNOWN_TLDS = {
     "com", "net", "org", "fr", "eu", "io", "dev", "app", "arpa", "lan", "local", "internal",
-    "lab", "home", "uk", "de", "be", "ch", "co", "me", "sh", "info", "biz", "tv", "xyz",
+    "lab", "uk", "de", "be", "ch", "co", "me", "info", "biz", "tv", "xyz",
     "cloud", "tech", "ovh", "site", "online", "pro", "ai",
 }
 
@@ -159,7 +159,7 @@ def extract(text: str) -> dict:
     for rx in PORT_RES:
         for m in rx.finditer(text):
             n = int(m.group(1))
-            if 1 <= n <= 65535:
+            if 1024 <= n <= 65535:  # sous 1024, ports standard (22, 80…) : ils ne révèlent rien
                 found["ports"].add(f"port:{n}")
 
     for m in MAC_RE.finditer(text):
@@ -180,7 +180,6 @@ def extract(text: str) -> dict:
         if "." in host and host.lower() in PUBLIC_DOMAINS:
             continue
         found["names"].add(f"{user}@{host}")
-        found["names"].add(f"re:\\b{re.escape(user)}@")
     for m in SSH_HOST_RE.finditer(text):
         keyword = m.group(0).split()[0]
         for value in m.group(1).split():

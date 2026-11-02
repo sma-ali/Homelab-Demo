@@ -35,3 +35,10 @@ IP, plages réseau, ports, noms de domaine, noms d'hôtes, adresses MAC, identif
 - Docs et commentaires en français ; identifiants du code en anglais.
 - Commits Conventional, forme sèche, en minuscules, sans point final. Aucune attribution d'IA.
 - Jamais de tiret cadratin ni de demi-cadratin comme ponctuation.
+
+## Outils
+
+- `tools/build_blacklist.py` : régénère la liste noire (hors dépôt) depuis les sources privées, sans toucher à la partie manuelle.
+- `tools/check_leaks.py` : le contrôle (texte, OCR des images et des vidéos, métadonnées, piste audio, e-mail d'auteur). Lancé par `.githooks/` (activer avec `git config core.hooksPath .githooks`).
+- `tools/mask/` + `tools/build_mask.py` : le masque de tournage, une extension Chrome assemblée hors dépôt avec les vraies valeurs ; `tools/film.sh` ouvre la fenêtre de tournage.
+- Tests : `python3 -m unittest discover -s tests` et `npm test` (masque dans Chromium). Toujours avec de fausses valeurs.

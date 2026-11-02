@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Masque de tournage",
+  "version": "1.0",
+  "description": "Remplace à l'écran les valeurs sensibles par des valeurs factices avant de filmer.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["rules.js", "mask.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ]
+}
