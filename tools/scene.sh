@@ -35,12 +35,13 @@ case "$SCENE" in
       || die "Connexion SSH impossible sans saisie : lance « ssh-add », puis recommence." ;;
   *) die "Scène inconnue. Choix : vpn, scan, htop." ;;
 esac
-stty cols 100 rows 28 2>/dev/null
+case "$SCENE" in vpn) SIZE=(96 13) ;; scan) SIZE=(96 14) ;; htop) SIZE=(110 30) ;; esac
+stty cols "${SIZE[0]}" rows "${SIZE[1]}" 2>/dev/null
 
 # À partir d'ici, tout ce qui s'affiche passe par le masque.
 exec > >(python3 "$MASK" filter) 2>&1
 FILTER_PID=$!
-printf '\033]2;debut-de-prise\007\033[H\033[2J' > /dev/tty
+printf '\033]2;debut-de-prise:%sx%s\007\033[H\033[2J' "${SIZE[0]}" "${SIZE[1]}" > /dev/tty
 
 type_cmd() {
   # tape la commande déjà masquée (et vérifiée), caractère par caractère, directement à

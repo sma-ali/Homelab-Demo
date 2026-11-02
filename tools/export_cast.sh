@@ -13,7 +13,7 @@ command -v agg >/dev/null || { echo "agg manquant (voir travail/plans-a-filmer.m
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
 
 python3 "$REPO/tools/terminal_mask.py" cast "$IN" "$TMP/propre.cast"
-agg --cols 100 --rows 28 --font-size 22 --theme monokai --idle-time-limit "$IDLE" --speed "$SPEED" \
+agg --font-size 22 --theme monokai --idle-time-limit "$IDLE" --speed "$SPEED" \
   --last-frame-duration 3 "$TMP/propre.cast" "$OUT"
 exiftool -q -overwrite_original -all= "$OUT"
 

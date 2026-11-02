@@ -29,7 +29,13 @@ import build_mask as bm  # noqa: E402
 import check_leaks as cl  # noqa: E402
 
 CONFIG = Path("~/.config/homelab_demo").expanduser()
-START_MARK = "\x1b]2;debut-de-prise\x07"  # titre de fenêtre invisible, posé par tools/scene.sh
+START_MARK = "\x1b]2;debut-de-prise"  # titre de fenêtre invisible, posé par tools/scene.sh
+START_RE = re.compile(re.escape(START_MARK) + r"(?::(\d+)x(\d+))?\x07")
+
+
+def start_mark(cols: int, rows: int) -> str:
+    """Repère de début de prise, avec la taille du terminal de la scène."""
+    return f"{START_MARK}:{cols}x{rows}\x07"
 ALARM = ("\x1b[0m\x1b[2J\x1b[H\r\n  MASQUE : une valeur sensible allait s'afficher.\r\n"
          "  Coupe la prise (Ctrl+D) et recommence.\r\n")
 
@@ -216,12 +222,13 @@ def read_cast(path: Path):
 def prepare_cast(src: Path, dst: Path, rules: Rules) -> int:
     header, events = read_cast(src)
     outputs = [(t, d) for t, kind, d in events if kind == "o"]
-    start = next((i for i, (_, d) in enumerate(outputs) if START_MARK in d), None)
+    start = next((i for i, (_, d) in enumerate(outputs) if START_RE.search(d)), None)
     if start is None:
         print("Repère de début introuvable : l'enregistrement ne vient pas de tools/scene.sh.", file=sys.stderr)
         return 2
     t0 = outputs[start][0]
-    first = outputs[start][1].split(START_MARK, 1)[1]
+    mark = START_RE.search(outputs[start][1])
+    first = outputs[start][1][mark.end():]
     kept = [(0.0, first)] + [(t - t0, d) for t, d in outputs[start + 1:]]
 
     # chaque événement garde son horodatage (la frappe reste caractère par caractère) ;
@@ -234,8 +241,8 @@ def prepare_cast(src: Path, dst: Path, rules: Rules) -> int:
         return 1
 
     term = header.get("term", {})
-    width = header.get("width") or term.get("cols")
-    height = header.get("height") or term.get("rows")
+    width = int(mark.group(1) or header.get("width") or term.get("cols"))
+    height = int(mark.group(2) or header.get("height") or term.get("rows"))
     with dst.open("w") as f:
         f.write(json.dumps({"version": 2, "width": width, "height": height}) + "\n")
         for t, d in cleaned:

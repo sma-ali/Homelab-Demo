@@ -82,7 +82,7 @@ class CastTests(unittest.TestCase):
         return path
 
     def test_preparation_is_cut_and_values_masked(self):
-        src = self.write_cast([(0.0, "[sudo] mot de passe : \r\n"), (2.0, tm.START_MARK + "$ "),
+        src = self.write_cast([(0.0, "[sudo] mot de passe : \r\n"), (2.0, tm.start_mark(80, 12) + "$ "),
                                (3.0, f"ping {PRIVATE_IP}\r\n")])
         dst = src.with_name("propre.cast")
         self.assertEqual(tm.prepare_cast(src, dst, make_rules()), 0)
@@ -90,13 +90,14 @@ class CastTests(unittest.TestCase):
         self.assertNotIn("sudo", text)
         self.assertNotIn(PRIVATE_IP, text)
         self.assertEqual(json.loads(text.splitlines()[1])[0], 0.0)
+        self.assertEqual(json.loads(text.splitlines()[0])["height"], 12)
 
     def test_cast_without_start_mark_is_refused(self):
         src = self.write_cast([(0.0, "bonjour\r\n")])
         self.assertEqual(tm.prepare_cast(src, src.with_name("x.cast"), make_rules()), 2)
 
     def test_leak_in_cast_writes_nothing(self):
-        src = self.write_cast([(0.0, tm.START_MARK), (1.0, SECRET_NAME[:3] + "\x1b[1m" + SECRET_NAME[3:] + "\r\n")])
+        src = self.write_cast([(0.0, tm.start_mark(80, 12)), (1.0, SECRET_NAME[:3] + "\x1b[1m" + SECRET_NAME[3:] + "\r\n")])
         dst = src.with_name("propre.cast")
         self.assertEqual(tm.prepare_cast(src, dst, make_rules()), 1)
         self.assertFalse(dst.exists())
