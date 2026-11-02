@@ -3,6 +3,7 @@
 # puis le passe au contrôle image par image. L'extrait n'est gardé que si le contrôle passe.
 #
 # Usage : tools/export_clip.sh RUSH SORTIE.mp4|SORTIE.gif [DÉBUT] [FIN] [VITESSE]
+#   GIF_WIDTH=1920 devant la commande : GIF en pleine largeur (défaut 1280).
 #   DÉBUT, FIN : horodatages ffmpeg (ex. 00:00:03.5) ; VITESSE : 2 = deux fois plus vite.
 # Exemple : tools/export_clip.sh rushes/plan1.mkv media/tableau-de-bord.mp4 00:00:02 00:00:16
 set -euo pipefail
@@ -21,7 +22,7 @@ case "$OUT" in
       -bsf:v filter_units=remove_types=6 "$OUT" ;;
   *.gif)
     ffmpeg -v error -y "${TRIM[@]}" -i "$IN" -an \
-      -vf "setpts=PTS/$SPEED,scale='min(1280,iw)':-2:flags=lanczos,fps=12,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" \
+      -vf "setpts=PTS/$SPEED,scale='min(${GIF_WIDTH:-1280},iw)':-2:flags=lanczos,fps=12,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" \
       -map_metadata -1 -fflags +bitexact "$OUT"
     exiftool -q -overwrite_original -all= "$OUT" ;;
   *) echo "Sortie en .mp4 ou .gif seulement." >&2; exit 2 ;;

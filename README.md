@@ -30,6 +30,17 @@ automatisées.
 *Le vrai panel, filmé en direct. Les noms, adresses et versions à l'écran sont factices :
 ils sont remplacés dans le navigateur avant même d'être affichés.*
 
+![Sauvegarde à la demande de la VM de dev vers l'espace de sauvegarde de l'hébergeur](media/sauvegarde.gif)
+
+*Une sauvegarde à chaud de la VM de dev, envoyée sur l'espace de sauvegarde de l'hébergeur,
+jusqu'au « TASK OK ».*
+
+![Restauration de cette sauvegarde sous un nouvel identifiant, puis démarrage](media/restauration.gif)
+
+*La preuve qu'elle sert : restaurée à côté de l'originale, sous un nouvel identifiant et un nom
+neutre, carte réseau débranchée pour ne pas entrer en conflit avec la VM d'origine, puis
+démarrée.*
+
 ## Schéma
 
 ```mermaid
