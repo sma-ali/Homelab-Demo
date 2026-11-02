@@ -51,6 +51,12 @@ n'atteint que ce dont il a besoin, et tout le reste lui est refusé.*
 *Le VPN-first en vingt secondes : tunnel coupé, le panel d'administration ne répond pas ;
 tunnel remonté, il répond. Enregistré en texte, la sortie masquée avant d'atteindre l'écran.*
 
+![Scan des 65 535 ports TCP depuis la 4G, puis scan témoin d'un serveur de test](media/scan.gif)
+
+*Vérifié de l'extérieur : les 65 535 ports TCP scannés depuis une connexion 4G. Cinq ports
+semblent ouverts ; le même test sur le serveur de test de nmap donne exactement les mêmes. C'est
+le proxy de l'opérateur mobile qui répond, pas le serveur ([le retour d'expérience](docs/retours/01-scan-externe-ipv6.md)).*
+
 ## Schéma
 
 ```mermaid
