@@ -20,6 +20,9 @@ esac
 
 python3 "$REPO/tools/build_mask.py" >/dev/null
 
+# --disable-infobars et --test-type : pas de bandeau « Chrome for Testing » ni d'avertissement
+# sur les options de lancement, qui apparaîtraient dans chaque prise.
+
 exec "$CHROME" \
   --user-data-dir="$CONF/profil-tournage" \
   --disable-extensions-except="$CONF/masque" \
@@ -28,5 +31,6 @@ exec "$CHROME" \
   --window-size=1600,900 \
   --no-first-run --no-default-browser-check \
   --disable-notifications \
+  --disable-infobars --test-type \
   --disable-features=Translate \
   --lang=fr
