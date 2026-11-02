@@ -76,6 +76,9 @@ class TextTests(unittest.TestCase):
         rules = {f.rule for f in cl.scan_text("f", f"{ipv6} {mac} {email}", [])}
         self.assertEqual(rules, {"IPv6 hors plage de documentation", "adresse MAC", "adresse e-mail"})
 
+    def test_decorator_in_diff_is_not_an_email(self):
+        self.assertEqual(cl.scan_text("f", "+@unittest.skipUnless(x)", []), [])
+
     def test_doc_values_pass(self):
         doc_ipv6 = "2001:db8::" + "1"
         doc_mac = "00:00:5e:00:53:" + "01"

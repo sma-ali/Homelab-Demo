@@ -49,7 +49,7 @@ NOREPLY_RE = re.compile(r"@users\.noreply\.github\.com$", re.I)
 IPV4_RE = re.compile(r"(?<![\w.])((?:\d{1,3}\.){3}\d{1,3})(?![\w]|\.\d)")
 IPV6_RE = re.compile(r"(?<![\w:.])((?:[0-9a-fA-F]{1,4}:|:){2,7}[0-9a-fA-F]{0,4})(?![\w:])")
 MAC_RE = re.compile(r"(?<![0-9A-Fa-f:-])((?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2})(?![0-9A-Fa-f:-])")
-EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+EMAIL_RE = re.compile(r"(?<![\w.+-])\w[\w.+-]*@[\w-]+(?:\.[\w-]+)+")
 WG_KEY_RE = re.compile(r"(?<![A-Za-z0-9+/])[A-Za-z0-9+/]{42}[AEIMQUYcgkosw048]=(?![A-Za-z0-9+/=])")
 GENERIC_RULES = [
     ("domaine interne", re.compile(r"\b[\w-]+(?:\.[\w-]+)*\.(?:internal|lan|local|home\.arpa|localdomain)\b(?!\.\w)", re.I)),
