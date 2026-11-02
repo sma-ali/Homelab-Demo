@@ -32,6 +32,10 @@ documentation, domaine `exemple.lab`) :
 - **avec un filet** : si une valeur sensible reste visible malgré tout (par exemple coupée en
   deux morceaux de texte), la page entière est recouverte d'un écran noir. La prise est à refaire.
 
+Pour les plans de terminal, même principe : la scène est enregistrée en texte (asciinema), et
+toute la sortie des commandes passe par un masque de terminal avant d'atteindre l'écran. Le
+texte enregistré est revérifié en entier avant d'être rendu en animation.
+
 ## 3. Un contrôle avant chaque commit
 
 Un hook git refuse tout commit qui contient une valeur de la liste noire, ou une valeur
@@ -72,3 +76,10 @@ Les fichiers propres, eux, doivent passer : un garde-fou qui crie au loup finit 
 - **Une fausse alerte instructive** : sur un GIF trop tramé, l'OCR a lu l'adresse factice
   `2001:db8::` comme une vraie adresse. Plutôt que d'affaiblir le contrôle, j'ai rendu le GIF
   plus net.
+- **Un chemin personnel dans `htop`** : htop redessine l'écran par petits morceaux, et un
+  chemin arrivé en deux fois a échappé au masque de terminal. L'OCR l'a lu sur une seule image
+  de l'animation, qui a été supprimée. Ce plan a été abandonné plutôt que d'assouplir le
+  contrôle.
+- **Un faux port ouvert** : scanné depuis la 4G, le serveur semblait exposer cinq ports. Le même
+  scan d'un serveur de test a donné les mêmes : c'était l'opérateur mobile. L'extrait montre
+  les deux scans.
