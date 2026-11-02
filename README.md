@@ -22,7 +22,7 @@ aussi tourner, chaque nuit, mes chaînes de production vidéo automatisées.
   son propre pare-feu, en IPv4 et en IPv6.
 - **Accès** : uniquement par VPN WireGuard. Depuis Internet, un seul port UDP est ouvert ; le
   panel d'administration, le SSH et les VM n'y sont pas exposés.
-- **Machines** : une VM de développement et une VM de production qui travaille sans surveillance.
+- **Machines** : une VM de développement et une VM de production qui tourne en autonomie, sans intervention de ma part.
 - **Sauvegardes** : toutes les VM, chaque nuit, avec une restauration réellement testée.
 - **Documentation** : chaque décision, procédure et commande consignée dans git.
 
