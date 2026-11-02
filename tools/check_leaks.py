@@ -69,6 +69,7 @@ HARMLESS_IMAGE_GROUPS = ("PNG-pHYs:", "PNG-gAMA:", "PNG-sRGB:", "PNG-cHRM:", "PN
 ENCODER_SIGNATURE_RE = re.compile(rb"x264 - core|x265 \(build|Lavf\d|Lavc\d|HandBrake|OBS Studio|obs-output")
 
 # Métadonnées tolérées dans une vidéo : la structure du conteneur, rien d'autre.
+VERSION_IN_TAG_RE = re.compile(r"\d+\.\d|(?:Lavc|Lavf|core )\d")
 ALLOWED_VIDEO_TAGS = {"major_brand", "minor_version", "compatible_brands", "language",
                       "handler_name", "vendor_id"}
 
@@ -252,10 +253,10 @@ def video_metadata_findings(path: str, file: Path) -> list[Finding]:
         tags.update(stream.get("tags", {}))
         if stream.get("codec_type") == "audio" and file.suffix != ".gif":
             found.append(Finding(path, "pistes", "piste audio", "la vidéo doit être muette"))
-    # un « encoder » sans chiffre (vide, ou « Lavc libx264 » en mode bitexact des ffmpeg plus
+    # un « encoder » sans numéro de version (vide, ou « Lavc libx264 » en mode bitexact des ffmpeg plus
     # anciens) ne trahit aucune version
     extra = sorted(k for k, v in tags.items() if k.lower() not in ALLOWED_VIDEO_TAGS
-                   and not (k.lower() == "encoder" and not re.search(r"\d", str(v))))
+                   and not (k.lower() == "encoder" and not VERSION_IN_TAG_RE.search(str(v))))
     if extra:
         found.append(Finding(path, "métadonnées", "métadonnée restante", ", ".join(extra)))
     signature = ENCODER_SIGNATURE_RE.search(file.read_bytes())
