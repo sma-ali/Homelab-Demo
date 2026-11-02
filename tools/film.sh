@@ -23,7 +23,11 @@ python3 "$REPO/tools/build_mask.py" >/dev/null
 # --disable-infobars et --test-type : pas de bandeau « Chrome for Testing » ni d'avertissement
 # sur les options de lancement, qui apparaîtraient dans chaque prise.
 
+# Sous WSLg, Chromium en Wayland n'affiche pas le curseur : on le force en X11.
+export XCURSOR_THEME=Adwaita
+
 exec "$CHROME" \
+  --ozone-platform=x11 \
   --user-data-dir="$CONF/profil-tournage" \
   --disable-extensions-except="$CONF/masque" \
   --load-extension="$CONF/masque" \
