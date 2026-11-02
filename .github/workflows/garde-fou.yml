@@ -1,0 +1,32 @@
+# Contrôle public : sans la liste noire (privée), seulement les règles génériques et gitleaks.
+# La barrière principale reste le hook local, qui a la liste noire.
+name: garde-fou
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  controle:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Outils
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-fra libimage-exiftool-perl ffmpeg gitleaks
+
+      - name: Tests du garde-fou
+        run: python3 -m unittest discover -s tests
+
+      - name: Règles génériques, fichiers et historique
+        run: python3 tools/check_leaks.py --generic-only --history
+
+      - name: gitleaks, tout l'historique
+        run: gitleaks detect --redact --no-banner

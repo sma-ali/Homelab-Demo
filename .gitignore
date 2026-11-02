@@ -1,0 +1,20 @@
+# Contexte privé
+CLAUDE.local.md
+
+# Rushes et fichiers de travail (seuls les médias finaux vérifiés sont commités)
+rushes/
+travail/
+*.mkv
+
+# Secrets et listes sensibles, par prudence
+.env
+.env.*
+liste-noire*
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
