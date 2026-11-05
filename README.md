@@ -152,6 +152,23 @@ ni la configuration, ni le savoir-faire. Leçon retenue, tout est écrit cette f
 - des notes pédagogiques pour comprendre, pas seulement reproduire ;
 - une règle pour toute modification du pare-feu à distance : armer d'abord un retour automatique.
 
+## Ce que j'ai appris
+
+- **Vérifier de l'extérieur.** Une protection jamais testée depuis Internet n'est qu'une
+  supposition : c'est un scan depuis la 4G qui a révélé le trou en IPv6.
+- **L'IPv6 a ses propres règles.** Une règle `iptables` ne couvre jamais l'IPv6 ; chaque règle a
+  besoin de sa jumelle `ip6tables`.
+- **« Tout rejeter sauf » plutôt que « fermer service par service »** : le prochain service
+  installé est protégé d'office.
+- **Le routage de bout en bout.** Un tunnel qui monte ne suffit pas : sans route retour, l'hôte
+  ne savait pas répondre aux machines du VPN.
+- **Ne jamais s'enfermer dehors.** Avant de toucher au pare-feu d'un serveur distant, armer un
+  retour automatique à l'état d'avant.
+- **Une sauvegarde sans alerte échoue en silence.** Et une sauvegarde jamais restaurée n'est
+  qu'une hypothèse : la restauration se teste.
+- **Écrire au fur et à mesure.** La première version de ce labo est partie sans laisser de trace ;
+  celle-ci est entièrement documentée, commandes et erreurs comprises.
+
 ## Sources et outils
 
 Les tutoriels qui m'ont servi de base, transposés à Proxmox VE récent et à OPNsense :
@@ -170,3 +187,7 @@ cette vitrine (masque de tournage, contrôle des fuites, tests) ont été écrit
 - Être alerté si une sauvegarde échoue, en lisant l'API Proxmox avec un jeton en lecture seule.
 - Une copie hors site : aujourd'hui, les sauvegardes sont dans le même datacenter que le serveur.
 - Phase 2 : un NAS à la maison, Headscale, des VM d'entraînement réseau (FortiGate, EVE-NG).
+
+## Licence
+
+Le code des outils et la documentation sont sous licence [MIT](LICENSE).
