@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-labelledby="titre desc">
+  <title id="titre">Architecture du homelab</title>
+  <desc id="desc">Mes appareils rejoignent le serveur dédié par un tunnel WireGuard. L'hôte Proxmox redirige seulement le port du VPN vers la VM pare-feu OPNsense, qui protège le réseau interne où vivent la VM de dev et la VM de production. Chaque nuit, l'hôte sauvegarde les VM vers l'espace de sauvegarde de l'hébergeur.</desc>
+  <style>
+    .fond { fill: #ffffff; }
+    .zone { fill: #f3f5f8; stroke: #c9d1db; }
+    .interne { fill: #e8f0fb; stroke: #9db8e0; }
+    .boite { fill: #ffffff; stroke: #5b6b80; }
+    .accent { fill: #ffffff; stroke: #2f6fd1; stroke-width: 2; }
+    .titre { fill: #1b2430; font-size: 15px; font-weight: 600; }
+    .texte { fill: #3a4656; font-size: 13px; }
+    .legende { fill: #5b6b80; font-size: 12px; }
+    .zone-nom { fill: #5b6b80; font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+    .trait { stroke: #5b6b80; stroke-width: 1.6; fill: none; }
+    .tunnel { stroke: #2f6fd1; stroke-width: 2.4; fill: none; }
+    .nuit { stroke: #5b6b80; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+    .pointe { fill: #5b6b80; }
+    .pointe-bleue { fill: #2f6fd1; }
+    @media (prefers-color-scheme: dark) {
+      .fond { fill: #0d1117; }
+      .zone { fill: #161b22; stroke: #30363d; }
+      .interne { fill: #12233b; stroke: #2c4f80; }
+      .boite { fill: #0d1117; stroke: #8b98a8; }
+      .accent { fill: #0d1117; stroke: #5b9bf0; }
+      .titre { fill: #e6edf3; }
+      .texte { fill: #c2ccd6; }
+      .legende, .zone-nom { fill: #8b98a8; }
+      .trait, .nuit { stroke: #8b98a8; }
+      .tunnel { stroke: #5b9bf0; }
+      .pointe { fill: #8b98a8; }
+      .pointe-bleue { fill: #5b9bf0; }
+    }
+  </style>
+  <defs>
+    <marker id="fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="pointe"/></marker>
+    <marker id="fleche-bleue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="pointe-bleue"/></marker>
+  </defs>
+
+  <rect class="fond" x="0" y="0" width="900" height="470" rx="12"/>
+
+  <!-- appareils -->
+  <rect class="accent" x="8" y="165" width="134" height="80" rx="8"/>
+  <text class="titre" x="75" y="198" text-anchor="middle">Mes appareils</text>
+  <text class="texte" x="75" y="218" text-anchor="middle">clients</text>
+  <text class="texte" x="75" y="234" text-anchor="middle">WireGuard</text>
+
+  <!-- internet -->
+  <circle class="boite" cx="205" cy="205" r="38"/>
+  <text class="titre" x="205" y="210" text-anchor="middle">Internet</text>
+
+  <text class="legende" x="205" y="268" text-anchor="middle">tunnel chiffré,</text>
+  <text class="legende" x="205" y="284" text-anchor="middle">un seul port UDP</text>
+
+  <!-- serveur dédié -->
+  <rect class="zone" x="290" y="24" width="594" height="336" rx="10"/>
+  <text class="zone-nom" x="308" y="48">SERVEUR DÉDIÉ</text>
+
+  <!-- tunnel, tracé après le cadre du serveur pour rester visible -->
+  <path class="tunnel" d="M142,205 L164,205" marker-end="url(#fleche-bleue)"/>
+  <path class="tunnel" d="M243,205 L308,205" marker-end="url(#fleche-bleue)"/>
+
+  <!-- hôte -->
+  <rect class="boite" x="310" y="148" width="152" height="114" rx="8"/>
+  <text class="titre" x="386" y="176" text-anchor="middle">Hôte Proxmox VE</text>
+  <text class="texte" x="386" y="200" text-anchor="middle">une seule IP publique</text>
+  <text class="texte" x="386" y="218" text-anchor="middle">NAT</text>
+  <text class="texte" x="386" y="236" text-anchor="middle">pare-feu IPv4 + IPv6</text>
+
+  <!-- transit -->
+  <path class="trait" d="M462,205 L556,205" marker-end="url(#fleche)"/>
+  <text class="legende" x="509" y="178" text-anchor="middle">transit :</text>
+  <text class="legende" x="509" y="194" text-anchor="middle">port VPN seul</text>
+
+  <!-- pare-feu -->
+  <rect class="accent" x="558" y="148" width="146" height="114" rx="8"/>
+  <text class="titre" x="631" y="176" text-anchor="middle">VM pare-feu</text>
+  <text class="texte" x="631" y="200" text-anchor="middle">OPNsense</text>
+  <text class="texte" x="631" y="218" text-anchor="middle">+ serveur</text>
+  <text class="texte" x="631" y="236" text-anchor="middle">WireGuard</text>
+
+  <!-- réseau interne -->
+  <rect class="interne" x="728" y="64" width="140" height="282" rx="8"/>
+  <text class="zone-nom" x="798" y="88" text-anchor="middle">RÉSEAU INTERNE</text>
+  <rect class="boite" x="743" y="112" width="110" height="64" rx="8"/>
+  <text class="titre" x="798" y="149" text-anchor="middle">VM de dev</text>
+  <rect class="boite" x="743" y="242" width="110" height="64" rx="8"/>
+  <text class="titre" x="798" y="270" text-anchor="middle">VM de</text>
+  <text class="titre" x="798" y="289" text-anchor="middle">production</text>
+
+  <path class="trait" d="M704,190 C722,190 722,144 741,144" marker-end="url(#fleche)"/>
+  <path class="trait" d="M704,220 C722,220 722,274 741,274" marker-end="url(#fleche)"/>
+
+  <!-- sauvegarde -->
+  <path class="nuit" d="M386,262 L386,382" marker-end="url(#fleche)"/>
+  <text class="legende" x="396" y="320">chaque nuit</text>
+  <path class="boite" d="M281,394 a105,10 0 0 0 210,0 v52 a105,10 0 0 1 -210,0 z"/>
+  <ellipse class="boite" cx="386" cy="394" rx="105" ry="10"/>
+  <text class="titre" x="386" y="425" text-anchor="middle">Espace de sauvegarde</text>
+  <text class="texte" x="386" y="443" text-anchor="middle">de l'hébergeur</text>
+</svg>

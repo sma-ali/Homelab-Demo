@@ -67,26 +67,9 @@ le proxy de l'opérateur mobile qui répond, pas le serveur ([le retour d'expér
 
 ## Schéma
 
-```mermaid
-flowchart LR
-    pc["Mes appareils<br/>clients WireGuard"]
-    internet(("Internet"))
-    subgraph serveur["Serveur dédié"]
-        hote["Hôte Proxmox VE<br/>une seule IP publique, NAT<br/>pare-feu IPv4 + IPv6"]
-        fw["VM pare-feu<br/>OPNsense + serveur WireGuard"]
-        subgraph lan["Réseau interne"]
-            dev["VM de dev"]
-            prod["VM de production"]
-        end
-    end
-    sauvegarde[("Espace de sauvegarde<br/>de l'hébergeur")]
+[![Schéma : mes appareils rejoignent le serveur par un tunnel WireGuard ; l'hôte Proxmox ne redirige que le port du VPN vers la VM pare-feu OPNsense, qui protège le réseau interne (VM de dev, VM de production) ; chaque nuit, l'hôte sauvegarde les VM vers l'espace de l'hébergeur](media/architecture.svg)](media/architecture.svg)
 
-    pc -- "tunnel chiffré<br/>un seul port UDP" --> internet --> hote
-    hote -- "réseau de transit<br/>seul le port VPN est redirigé" --> fw
-    fw --> dev
-    fw --> prod
-    hote -. "chaque nuit" .-> sauvegarde
-```
+*Cliquer sur le schéma l'ouvre en grand.*
 
 Le trajet détaillé d'une connexion, et les pièges rencontrés : [architecture](docs/architecture.md).
 
