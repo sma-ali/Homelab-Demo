@@ -1,6 +1,7 @@
 {
   "name": "homelab-demo-outils",
   "private": true,
+  "license": "MIT",
   "description": "Outils de la vitrine : tests du masque de tournage",
   "scripts": {
     "test": "node tests/mask.test.mjs"
